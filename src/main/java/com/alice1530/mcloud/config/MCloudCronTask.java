@@ -106,6 +106,14 @@ public class MCloudCronTask {
                 LOGGER.error("未配置本地:{},和远程:{}文件夹，取消上传操作", localPath, remotePath);
                 return;
             }
+
+
+            //创建初始，远程文件夹
+            CFile cFile = MCloudClientService.getCFileByPath(remotePath);
+            if (cFile==null){
+                createFolders(remotePath);
+            }
+
             //递归上传
             recurseUpload(local, remote);
         } catch (Exception e) {
